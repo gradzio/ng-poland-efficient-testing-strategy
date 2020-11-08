@@ -2,7 +2,8 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Injectable, InjectionToken } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { UserAggregate } from '../domain/user.aggregate';
-import { FetchUsersAction, UsersState } from './users.state';
+import { usersSelector } from './users.selector';
+import { FetchUsersAction, initialUserState, UsersState, UsersStateModel } from './users.state';
 
 export interface Store {
   dispatch(action): void;
@@ -14,22 +15,23 @@ export const STORE = new InjectionToken<Store>('STORE');
 
 @Injectable({providedIn: 'root'})
 export class SubjectStore implements Store {
-  private bus = new BehaviorSubject({ users: [] });
+  private bus = new BehaviorSubject<{users: UsersStateModel}>({ users: initialUserState });
 
   constructor(private usersState: UsersState) {
-    this.usersState.users$.pipe(
-      tap(users => console.log('users', users)),
-      tap(users => this.bus.next({users}))
-    ).subscribe();
   }
 
   dispatch(action): void {
-    this.usersState.fetchUsers(action);
+    const usersState = this.bus.getValue();
+    this.usersState.fetchUsers(action, usersState.users).pipe(
+      tap(usersStateModel => this.bus.next({
+        users: usersStateModel
+      }))
+    ).subscribe();
   }
 
-  select(stateName: string): Observable<any> {
+  select(selector: string): Observable<any> {
     return this.bus.asObservable().pipe(
-      map(all => all[stateName])
+      map(all => usersSelector(all.users))
     );
   }
 }
