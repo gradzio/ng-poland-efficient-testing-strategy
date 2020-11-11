@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { STORE, Store } from '../../application/store';
+import { STORE, Store } from '../../store';
 import { FetchUsersAction } from '../../application/users.state';
 import { UserAggregate } from '../../domain/user.aggregate';
 

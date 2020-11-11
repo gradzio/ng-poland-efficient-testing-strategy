@@ -2,7 +2,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { of } from 'rxjs';
 import { UserAggregate } from '../domain/user.aggregate';
 import { UsersService } from '../infrastructure/users.service';
-import { STORE, Store, SubjectStore } from './store';
+import { STORE, Store, SubjectStore } from '../store';
 import { FetchUsersAction, UsersState } from './users.state';
 
 describe('UserState', () => {
@@ -13,7 +13,9 @@ describe('UserState', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: UsersService, useValue: {
+        {
+          provide: UsersService,
+          useValue: {
             getAll: () => of([])
           }
         },

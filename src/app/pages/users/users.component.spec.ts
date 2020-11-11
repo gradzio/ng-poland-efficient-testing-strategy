@@ -1,11 +1,10 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EMPTY, of } from 'rxjs';
-import { take, takeLast } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { UserAggregate } from '../../domain/user.aggregate';
 
 import { UsersComponent } from './users.component';
-import { Store, STORE, SubjectStore } from '../../application/store';
+import { Store, STORE } from '../../store';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;

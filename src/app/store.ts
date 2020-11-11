@@ -1,9 +1,8 @@
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { Injectable, InjectionToken } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, InjectionToken, NgModule } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
-import { UserAggregate } from '../domain/user.aggregate';
-import { usersSelector } from './users.selector';
-import { FetchUsersAction, initialUserState, UsersState, UsersStateModel } from './users.state';
+import { usersSelector } from './application/users.selector';
+import { initialUserState, UsersState, UsersStateModel } from './application/users.state';
 
 export interface Store {
   dispatch(action): void;
