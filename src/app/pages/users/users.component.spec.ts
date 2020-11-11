@@ -1,6 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { RemoveUser } from '../../application/users.actions';
 import { UserAggregate } from '../../domain/user.aggregate';
 
 import { UsersComponent } from './users.component';
@@ -51,4 +52,17 @@ describe('UsersComponent', () => {
       expect(userRows[0].nativeElement.textContent).toContain(users[0].name);
     });
   }));
+
+  it('should delete the user', () => {
+    const randomUsers = makeRandomUsers(Math.ceil(Math.random() * 100));
+    spyOn(store, 'select').and.returnValue(of(randomUsers));
+    const dispatchSpy = spyOn(store, 'dispatch');
+    fixture.detectChanges();
+    const firstUserRow = fixture.debugElement.query(By.css('ul.users')).queryAll(By.css('li'))[0];
+
+    firstUserRow.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(dispatchSpy).toHaveBeenCalledWith(new RemoveUser(randomUsers[0].id));
+  });
 });

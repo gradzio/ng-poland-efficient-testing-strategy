@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { UserAggregate } from '../domain/user.aggregate';
 import { UsersService } from '../infrastructure/users.service';
 import { STORE, Store, SubjectStore } from '../store';
-import { FetchUsersAction } from './users.actions';
+import { FetchUsersAction, RemoveUser } from './users.actions';
 import { usersSelector } from './users.selectors';
 import { UsersState } from './users.state';
 
@@ -18,7 +18,8 @@ describe('UserState', () => {
         {
           provide: UsersService,
           useValue: {
-            getAll: () => of([])
+            getAll: () => of([]),
+            removeById: (id: string) => of(true)
           }
         },
         { provide: STORE, useClass: SubjectStore },
@@ -50,4 +51,20 @@ describe('UserState', () => {
       expect(users[0]).toEqual(userGreg);
     });
   }));
+
+  it('should delete a user', () => {
+    // Given there are two users: "Greg" and "Tom"
+    const userGreg = UserAggregate.fromName('Greg');
+    const userTom = UserAggregate.fromName('Tom');
+    store.setState({usersState: { users: [userGreg, userTom]} });
+
+    // When I delete a user "Tom"
+    store.dispatch(new RemoveUser(userTom.id));
+
+    // Then I should only have "Greg" user
+    store.select(usersSelector).subscribe(users => {
+      expect(users.length).toEqual(1);
+      expect(users[0]).toEqual(userGreg);
+    });
+  });
 });

@@ -1,6 +1,6 @@
 <ng-container *ngIf="users$ | async as users">
   <p>Total: {{users.length}}</p>
   <ul class="users">
-    <li *ngFor="let user of users">{{user.name}}</li>
+    <li *ngFor="let user of users" (click)="onDeleteUser(user.id)">{{user.name}}</li>
   </ul>
 </ng-container>

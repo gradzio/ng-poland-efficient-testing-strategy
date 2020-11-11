@@ -71,4 +71,31 @@ describe('UsersService', () => {
     });
   });
 
+  describe('removeById', () => {
+    const userId = '1';
+    beforeEach(done => {
+      provider
+        .addInteraction({
+          state: `there is a user with id ${userId}`,
+          uponReceiving: `DELETE /users/${userId}`,
+          withRequest: {
+            method: 'DELETE',
+            path: `/users/${userId}`
+          },
+          willRespondWith: {
+            status: 204,
+            body: []
+          }
+        }).then(done, error => done.fail(error));
+    });
+
+    it('removeById', done => {
+      service.removeById(userId).subscribe(isDeleted => {
+        expect(isDeleted).toEqual(true);
+        done();
+      });
+
+    });
+  });
+
 });

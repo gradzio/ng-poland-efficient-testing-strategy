@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FetchUsersAction } from '../../application/users.actions';
+import { FetchUsersAction, RemoveUser } from '../../application/users.actions';
 import { usersSelector } from '../../application/users.selectors';
 import { STORE, Store } from '../../store';
 import { UserAggregate } from '../../domain/user.aggregate';
@@ -18,5 +18,9 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(new FetchUsersAction());
     this.users$ = this.store.select(usersSelector);
+  }
+
+  onDeleteUser(id: string) {
+    this.store.dispatch(new RemoveUser(id));
   }
 }

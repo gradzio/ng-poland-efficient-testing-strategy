@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserAggregate } from '../domain/user.aggregate';
 
@@ -23,6 +23,13 @@ export class UsersService {
     return this.client.get(`${this.baseUrl}/users`)
       .pipe(
         map((response: Response<HasIdAndName>) => response.data.map(item => new UserAggregate(item.id, item.name)))
+      );
+  }
+
+  removeById(id: string): Observable<boolean> {
+    return this.client.delete(`${this.baseUrl}/users/${id}`)
+      .pipe(
+        map(_ => true)
       );
   }
 }

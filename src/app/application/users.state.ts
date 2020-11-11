@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserAggregate } from '../domain/user.aggregate';
 import { UsersService } from '../infrastructure/users.service';
-import { FetchUsersAction } from './users.actions';
+import { FetchUsersAction, RemoveUser } from './users.actions';
 
 export interface UsersStateModel {
   users: UserAggregate[];
@@ -22,5 +22,12 @@ export class UsersState {
         map((users: UserAggregate[]) => ({ ...state, users})
       )
     );
+  }
+
+  removeUser(action: RemoveUser, state: UsersStateModel): Observable<UsersStateModel> {
+    return this.usersService.removeById(action.id)
+      .pipe(
+        map(_ => ({ ...state, users: state.users.filter(user => user.id !== action.id)}))
+      );
   }
 }
