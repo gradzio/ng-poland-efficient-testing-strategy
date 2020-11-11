@@ -48,4 +48,4 @@ Thumbs.db
 /pacts
 
 # Secrets
-src/environments/env.js
+src/environments/env*.js
