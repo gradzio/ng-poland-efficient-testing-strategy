@@ -31,7 +31,7 @@ describe('UserState', () => {
   });
 
   it('should fetch users', fakeAsync(() => {
-    const userGreg = new UserAggregate('Greg');
+    const userGreg = UserAggregate.fromName('Greg');
     spyOn(service, 'getAll').and.returnValue(of([userGreg]));
     store.dispatch(new FetchUsersAction());
 

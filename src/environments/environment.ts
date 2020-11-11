@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  usersUrl: 'https://cobiro.pact.dius.com.au/pacts/provider/ng-poland-provider/consumer/ng-poland-consumer/latest/stub'
 };
 
 /*

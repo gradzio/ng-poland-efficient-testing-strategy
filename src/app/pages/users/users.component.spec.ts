@@ -12,7 +12,7 @@ describe('UsersComponent', () => {
   let fixture: ComponentFixture<UsersComponent>;
   let store: Store;
 
-  const makeRandomUsers = (count: number) => new Array(count).fill(new UserAggregate(`Name  ${Math.random()}`));
+  const makeRandomUsers = (count: number) => new Array(count).fill(UserAggregate.fromName(`Name  ${Math.random()}`));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

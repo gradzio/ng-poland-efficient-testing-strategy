@@ -4,10 +4,11 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular', 'pact'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('@pact-foundation/karma-pact'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -27,6 +28,15 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+    pact: [{
+      cors: true,
+      port: 8100,
+      consumer: 'ng-poland-consumer',
+      provider: 'ng-poland-provider',
+      log: require('path').resolve(process.cwd(), 'pacts', 'pact.log'),
+      dir: 'pacts',
+      spec: 2
+    }]
   });
 };

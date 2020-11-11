@@ -44,3 +44,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/pacts
+
+# Secrets
+src/environments/env.js
