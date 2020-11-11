@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserAggregate } from '../domain/user.aggregate';
 import { UsersService } from '../infrastructure/users.service';
-
-export class FetchUsersAction {}
+import { FetchUsersAction } from './users.actions';
 
 export interface UsersStateModel {
   users: UserAggregate[];

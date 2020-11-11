@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FetchUsersAction } from '../../application/users.actions';
+import { usersSelector } from '../../application/users.selectors';
 import { STORE, Store } from '../../store';
-import { FetchUsersAction } from '../../application/users.state';
 import { UserAggregate } from '../../domain/user.aggregate';
 
 @Component({
@@ -16,6 +17,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new FetchUsersAction());
-    this.users$ = this.store.select('users');
+    this.users$ = this.store.select(usersSelector);
   }
 }

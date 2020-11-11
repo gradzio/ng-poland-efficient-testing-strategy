@@ -3,7 +3,9 @@ import { of } from 'rxjs';
 import { UserAggregate } from '../domain/user.aggregate';
 import { UsersService } from '../infrastructure/users.service';
 import { STORE, Store, SubjectStore } from '../store';
-import { FetchUsersAction, UsersState } from './users.state';
+import { FetchUsersAction } from './users.actions';
+import { usersSelector } from './users.selectors';
+import { UsersState } from './users.state';
 
 describe('UserState', () => {
   let store: Store;
@@ -33,13 +35,18 @@ describe('UserState', () => {
   });
 
   it('should fetch users', fakeAsync(() => {
+    // Given there are no users
+    store.setState({usersState: { users: []}});
+
+    // When I fetch all users containing user "Greg"
     const userGreg = UserAggregate.fromName('Greg');
     spyOn(service, 'getAll').and.returnValue(of([userGreg]));
     store.dispatch(new FetchUsersAction());
 
     tick();
 
-    store.select('users').subscribe(users => {
+    // Then I should have this user
+    store.select(usersSelector).subscribe(users => {
       expect(users[0]).toEqual(userGreg);
     });
   }));
