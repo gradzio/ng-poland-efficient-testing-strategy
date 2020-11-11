@@ -35,7 +35,3 @@ export class SubjectStore implements Store {
     );
   }
 }
-
-export class SubjectState {
-  private dataSubject = new Subject<any>();
-}
