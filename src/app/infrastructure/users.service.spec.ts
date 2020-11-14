@@ -94,7 +94,6 @@ describe('UsersService', () => {
         expect(isDeleted).toEqual(true);
         done();
       });
-
     });
   });
 

@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
     this.users$ = this.store.select(usersSelector);
   }
 
-  onDeleteUser(id: string) {
+  onDeleteUser(id: string): void {
     this.store.dispatch(new RemoveUser(id));
   }
 }
